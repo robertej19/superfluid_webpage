@@ -1,3 +1,12 @@
+name: Show Me the S3cr3tz
+on: [push]
+
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Set env as secret
       env:
         MY_VAL: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPERFLUID_WEBPAGE }}
