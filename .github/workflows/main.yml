@@ -1,17 +1,8 @@
-name: Show Me the S3cr3tz
-on: [push]
-
-jobs:
-  debug:
-    name: Debug
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Set up secret file
+    - name: Set env as secret
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPERFLUID_WEBPAGE }}
+        MY_VAL: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPERFLUID_WEBPAGE }}
       run: |
-        echo ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPERFLUID_WEBPAGE }} | sed 's/./& /g'
+        import os
+        for q in (os.getenv("MY_VAL")):
+          print(q)
+      shell: python
