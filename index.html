@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Webpage</title>
+    <title>My Webpage - Projects</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
@@ -14,7 +14,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             color: #333;
         }
 
@@ -24,8 +24,18 @@
             color: #4a4a4a;
         }
 
-        a {
+        /* Container for the buttons */
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Style for all buttons */
+        #button-container a {
             display: inline-block;
+            text-align: center; /* Center the text on every button */
             color: #f9f9f9;
             background-color: #333;
             padding: 10px 20px;
@@ -33,18 +43,106 @@
             text-decoration: none;
             border-radius: 3px;
             transition: background-color 0.3s ease;
+            /* Width will be set via JavaScript */
         }
 
-        a:hover {
+        /* Hover state for buttons */
+        #button-container a:hover {
             background-color: #4a4a4a;
+        }
+
+        /* Style for buttons that are "in progress" */
+        #button-container a.in-progress {
+            background-color: #CC5500; /* Burnt orange */
+        }
+
+        /* Optional: Maintain hover contrast for in-progress buttons */
+        #button-container a.in-progress:hover {
+            background-color: #b04a00;
         }
     </style>
 </head>
+
+<!-- 
+Thesis = plot
+YT = featured video
+tchai = radio
+hobby projects = chairs
+OPL = graph
+PHDED = plot
+-->
 <body>
     <h1>Some things now. More later, maybe.</h1>
-    <a href="phded/index.html">Basic Analysis of Deadlift Every Day</a>
-    <a href="thesis/thesis_doc.html" target="_blank">Quark Distributions in Protons (Paper)</a>
-    <a href="https://www.youtube.com/@Super_Fluid" target="_blank">Some Video Stuff</a>
+    <div id="button-container">
+        <!-- Top button: always remains at the top; assume it's a complete project -->
+        <a href="https://phded.superfluid.systems" class="complete">Basic Analysis of Deadlift Every Day</a>
+        <!-- Other buttons that will be randomized -->
+        <a href="thesis/thesis_doc.html" target="_blank" class="complete">Quark Distributions in Protons (Paper)</a>
+        <a href="https://www.youtube.com/@Super_Fluid" target="_blank" class="complete">Videos</a>
+        <a href="thesis/thesis_doc.html" target="_blank" class="in-progress">Quark Distributions in Protons (Presentation)</a>
+        <a href="template.html" target="_blank" class="in-progress">GitHub </a>
+        <a href="template/template.html" target="_blank" class="in-progress">Staturstics</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Tchai</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Basics of Lockpicking</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Single Layer Perceptron</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Acidity Calculator</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Leverage Calculator</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Polynomial Z 5D Plotter</a>
+        <a href="template/template.html" target="_blank" class="in-progress">AIce Cream</a>
+        <a href="template/template.html" target="_blank" class="in-progress">MIT Hobby Shop Projects</a>
+        <a href="template/template.html" target="_blank" class="in-progress">Open PowerLifting Visualized</a>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('button-container');
+            // Get all buttons as an array
+            const buttons = Array.from(container.getElementsByTagName('a'));
+
+            // --- 1. Set uniform width for all buttons ---
+            let maxWidth = 0;
+            // First, reset each button's width to auto so we can measure natural width.
+            buttons.forEach(btn => {
+                btn.style.width = 'auto';
+                const btnWidth = btn.offsetWidth;
+                if (btnWidth > maxWidth) {
+                    maxWidth = btnWidth;
+                }
+            });
+            // Add some extra padding (e.g., 20px)
+            maxWidth += 20;
+            // Now, assign this width to each button.
+            buttons.forEach(btn => {
+                btn.style.width = maxWidth + 'px';
+            });
+
+            // --- 2. Randomize the order of buttons except the first ---
+            if (buttons.length > 1) {
+                // Keep the first button fixed.
+                const firstButton = buttons[0];
+                const secondButton = buttons[1];
+                const thirdButton = buttons[2];
+
+                // Slice off the rest of the buttons.
+                const restButtons = buttons.slice(3);
+
+                // Shuffle restButtons using the Fisher-Yates algorithm.
+                for (let i = restButtons.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [restButtons[i], restButtons[j]] = [restButtons[j], restButtons[i]];
+                }
+
+                // Clear the container and reattach the fixed first button,
+                // then append the shuffled buttons.
+                container.innerHTML = '';
+                container.appendChild(firstButton)
+                container.appendChild(secondButton);
+                container.appendChild(thirdButton);
+                ;
+                restButtons.forEach(btn => container.appendChild(btn));
+            }
+        });
+    </script>
 </body>
 </html>
-
